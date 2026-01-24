@@ -599,12 +599,23 @@
     stimulus: ['videos/intro.mp4'],
     choices: "NO_KEYS",
     trial_ends_after_video: false,
-    width: 1200,
-    height: 960,
+    width: window.innerWidth,
+    height: window.innerHeight,
     prompt: '<div id="arrow-container" style="display:none; position:fixed; right:16px; bottom:16px; z-index:10000;"><img id="intro-next-arrow" src="images/next_arrow.png" width="120" style="cursor:pointer; max-width:90%; height:auto;"></div>',
     on_load: function () {
+      var videoContainer = document.querySelector('.jspsych-video-container');
+      if (videoContainer) {
+        videoContainer.style.width = '100vw';
+        videoContainer.style.height = '100vh';
+        videoContainer.style.position = 'fixed';
+        videoContainer.style.top = '0';
+        videoContainer.style.left = '0';
+      }
       var video = document.querySelector('video');
       if (video) {
+        video.style.width = '100%';
+        video.style.height = '100%';
+        video.style.objectFit = 'contain';
         video.addEventListener('ended', function () {
           var arrow = document.getElementById('arrow-container');
           if (arrow) arrow.style.display = 'block';
@@ -647,12 +658,23 @@
     stimulus: ['videos/intro_to_test.mp4'],
     choices: "NO_KEYS",
     trial_ends_after_video: false,
-    width: 1200,
-    height: 960,
+    width: window.innerWidth,
+    height: window.innerHeight,
     prompt: '<div id="arrow-container" style="display:none; position:fixed; right:16px; bottom:16px; z-index:10000;"><img id="intro-next-arrow" src="images/next_arrow.png" width="120" style="cursor:pointer; max-width:90%; height:auto;"></div>',
     on_load: function () {
+      var videoContainer = document.querySelector('.jspsych-video-container');
+      if (videoContainer) {
+        videoContainer.style.width = '100vw';
+        videoContainer.style.height = '100vh';
+        videoContainer.style.position = 'fixed';
+        videoContainer.style.top = '0';
+        videoContainer.style.left = '0';
+      }
       var video = document.querySelector('video');
       if (video) {
+        video.style.width = '100%';
+        video.style.height = '100%';
+        video.style.objectFit = 'contain';
         video.addEventListener('ended', function () {
           var arrow = document.getElementById('arrow-container');
           if (arrow) arrow.style.display = 'block';
