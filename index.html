@@ -567,7 +567,7 @@
     { x: 150, y: 234, width: 93, height: 66 }   // yellow fish
   ];
 
-  // Preload all images and videos
+  // Preload all images and videos asynchronously
   const assetsToPreload = [
     'images/next_arrow.png',
     'images/stop.png',
@@ -583,16 +583,12 @@
     'videos/intro_to_test.mp4'
   ];
 
-  assetsToPreload.forEach(function(src) {
-    if (src.endsWith('.png')) {
-      var img = new Image();
-      img.src = src;
-    } else if (src.endsWith('.mp4')) {
-      var video = document.createElement('video');
-      video.preload = 'auto';
-      video.src = src;
-    }
-  });
+  // Load assets in background without blocking
+  setTimeout(function() {
+    assetsToPreload.forEach(function(src) {
+      fetch(src, { method: 'HEAD' }).catch(function() {});
+    });
+  }, 100);
 
   // Create timeline
   var timeline = [];
