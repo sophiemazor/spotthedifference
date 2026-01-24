@@ -576,23 +576,9 @@
   priorityVideo.src = 'videos/intro.mp4';
   priorityVideo.load();
 
-  // Delay other preloading to prioritize first video
-  setTimeout(function() {
-    var assetsToPreload = [
-      'images/next_arrow.png',
-      'images/stop.png',
-      'images/training_3dif_left_image.png',
-      'images/training_3dif_right_image.png',
-      'images/found_1_differenceof3.png',
-      'images/found_2_differenceof3.png',
-      'images/found_3_differenceof3.png',
-      'images/test_1dif_left_image.png',
-      'images/test_1dif_right_image.png',
-      'images/found_1_differenceof2.png',
-      'videos/intro_to_test.mp4'
-    ];
-
-    assetsToPreload.forEach(function(src) {
+  // Helper function to preload assets
+  function preloadAssets(srcArray) {
+    srcArray.forEach(function(src) {
       if (src.endsWith('.png')) {
         var img = new Image();
         img.src = src;
@@ -602,7 +588,10 @@
         video.src = src;
       }
     });
-  }, 2000);
+  }
+
+  // Only preload UI elements right away
+  preloadAssets(['images/next_arrow.png', 'images/stop.png']);
 
   // Create timeline
   var timeline = [];
@@ -646,6 +635,16 @@
         videoContainer.style.left = '0';
         videoContainer.style.marginTop = '-80px';
       }
+      
+      // Preload trial 1 images while video plays
+      preloadAssets([
+        'images/training_3dif_left_image.png',
+        'images/training_3dif_right_image.png',
+        'images/found_1_differenceof3.png',
+        'images/found_2_differenceof3.png',
+        'images/found_3_differenceof3.png'
+      ]);
+      
       var video = document.querySelector('video');
       if (video) {
         video.style.width = '100%';
