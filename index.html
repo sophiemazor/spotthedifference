@@ -570,6 +570,35 @@
     { x: 150, y: 234, width: 93, height: 66 }   // yellow fish
   ];
 
+  // Preload assets in the background without blocking
+  setTimeout(function() {
+    var assetsToPreload = [
+      'images/next_arrow.png',
+      'images/stop.png',
+      'images/training_3dif_left_image.png',
+      'images/training_3dif_right_image.png',
+      'images/found_1_differenceof3.png',
+      'images/found_2_differenceof3.png',
+      'images/found_3_differenceof3.png',
+      'images/test_1dif_left_image.png',
+      'images/test_1dif_right_image.png',
+      'images/found_1_differenceof2.png',
+      'videos/intro.mp4',
+      'videos/intro_to_test.mp4'
+    ];
+
+    assetsToPreload.forEach(function(src) {
+      if (src.endsWith('.png')) {
+        var img = new Image();
+        img.src = src;
+      } else if (src.endsWith('.mp4')) {
+        var video = document.createElement('video');
+        video.preload = 'auto';
+        video.src = src;
+      }
+    });
+  }, 500);
+
   // Create timeline
   var timeline = [];
 
