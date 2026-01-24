@@ -574,8 +574,9 @@
   var priorityVideo = document.createElement('video');
   priorityVideo.preload = 'auto';
   priorityVideo.src = 'videos/intro.mp4';
+  priorityVideo.load();
 
-  // Preload remaining images and videos in the background without blocking
+  // Delay other preloading to prioritize first video
   setTimeout(function() {
     var assetsToPreload = [
       'images/next_arrow.png',
@@ -601,7 +602,7 @@
         video.src = src;
       }
     });
-  }, 500);
+  }, 2000);
 
   // Create timeline
   var timeline = [];
