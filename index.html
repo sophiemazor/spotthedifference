@@ -683,6 +683,15 @@
     image_height: 500,
     stop_action: 'next',
     phase: 'practice',
+    on_load: function () {
+      // Preload test trial assets while practice trial displays
+      preloadAssets([
+        'images/test_1dif_left_image.png',
+        'images/test_1dif_right_image.png',
+        'images/found_1_differenceof2.png',
+        'videos/intro_to_test.mp4'
+      ]);
+    }
   };
   timeline.push(spot_trial1);
 
