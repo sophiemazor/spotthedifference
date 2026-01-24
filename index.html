@@ -9,18 +9,6 @@
   <script src="https://unpkg.com/@jspsych/plugin-survey-text@2.1.0"></script>
   <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet" type="text/css" />
   
-// preload images
-  <link rel="preload" as="image" href="images/next_arrow.png">
-  <link rel="preload" as="image" href="images/stop.png">
-  <link rel="preload" as="image" href="images/training_3dif_left_image.png">
-  <link rel="preload" as="image" href="images/training_3dif_right_image.png">
-  <link rel="preload" as="image" href="images/found_1_differenceof3.png">
-  <link rel="preload" as="image" href="images/found_2_differenceof3.png">
-  <link rel="preload" as="image" href="images/found_3_differenceof3.png">
-  <link rel="preload" as="image" href="images/test_1dif_left_image.png">
-  <link rel="preload" as="image" href="images/test_1dif_right_image.png">
-  <link rel="preload" as="image" href="images/found_1_differenceof2.png">
-  
   <style>
     .spot-ingifference-container {
       display: flex;
@@ -578,6 +566,33 @@
   var differences_Trial2 = [
     { x: 150, y: 234, width: 93, height: 66 }   // yellow fish
   ];
+
+  // Preload all images and videos
+  const assetsToPreload = [
+    'images/next_arrow.png',
+    'images/stop.png',
+    'images/training_3dif_left_image.png',
+    'images/training_3dif_right_image.png',
+    'images/found_1_differenceof3.png',
+    'images/found_2_differenceof3.png',
+    'images/found_3_differenceof3.png',
+    'images/test_1dif_left_image.png',
+    'images/test_1dif_right_image.png',
+    'images/found_1_differenceof2.png',
+    'videos/intro.mp4',
+    'videos/intro_to_test.mp4'
+  ];
+
+  assetsToPreload.forEach(function(src) {
+    if (src.endsWith('.png')) {
+      var img = new Image();
+      img.src = src;
+    } else if (src.endsWith('.mp4')) {
+      var video = document.createElement('video');
+      video.preload = 'auto';
+      video.src = src;
+    }
+  });
 
   // Create timeline
   var timeline = [];
