@@ -113,6 +113,7 @@
 
 <body></body>
 <script>
+  // Custom plugin for spot the difference task
   class SpotDifferencePlugin {
     constructor(jsPsych) {
       this.jsPsych = jsPsych;
@@ -123,6 +124,7 @@
       var clicks = [];
       var start_time = performance.now();
 
+      // Create HTML
       var html = `
         <div class="instructions">${trial.instructions}</div>
         <div class="spot-difference-container">
@@ -148,7 +150,7 @@
 
       display_element.innerHTML = html;
 
-      // make a container to track found differences - one per difference
+      // populate the found-images container with placeholder slots (one per difference)
       (function () {
         var container = document.getElementById('found-images-container');
         var numSlots = (typeof trial.num_found_slots === 'number' && trial.num_found_slots > 0) ? trial.num_found_slots : trial.differences.length;
@@ -167,7 +169,7 @@
         }
       })();
 
-      // Add stop button
+      // Add optional stop button (bottom-right). Behavior controlled by trial.stop_action
       var stopBtn = null;
       if (trial.stop_action) {
         stopBtn = document.createElement('img');
@@ -184,7 +186,7 @@
         document.body.appendChild(stopBtn);
 
         var stopClicked = function () {
-          // calculate duration spent on puzzles for trial_data
+          // build trial_data similar to end_trial
           var end_time = performance.now();
           var rt = end_time - start_time;
           var trial_data = {
@@ -220,7 +222,7 @@
         stopBtn.addEventListener('click', stopClicked);
       }
 
-      // If trial.max_duration provided, end trial after that many ms (for test trial)
+      // If trial.max_duration provided, end trial after that many ms (useful for spot_trial2)
       var maxTimer = null;
       function end_trial_spot2() {
         var end_time = performance.now();
@@ -247,15 +249,15 @@
 
 
 
-      // function to check if participant clicked on a difference
+      // Function to check if participant clicked on a difference
       function checkClick(x, y, imageId) {
         for (var i = 0; i < trial.differences.length; i++) {
           var diff = trial.differences[i];
 
-          // skip if already found
+          // Skip if already found
           if (found_differences.includes(i)) continue;
 
-          // check if click is within the difference region
+          // Check if click is within the region
           if (x >= diff.x && x <= diff.x + diff.width &&
             y >= diff.y && y <= diff.y + diff.height) {
             return i;
@@ -294,7 +296,7 @@
         var imageId = e.target.id;
         var wrapper = e.target.parentElement;
 
-        // record click
+        // Record click
         clicks.push({
           x: x,
           y: y,
@@ -302,7 +304,7 @@
           time: performance.now() - start_time
         });
 
-        // check if click found a difference
+        // Check if click found a difference
         var diffIndex = checkClick(x, y, imageId);
 
         if (diffIndex !== -1) {
@@ -310,17 +312,18 @@
           var diff = trial.differences[diffIndex];
           addMarker(diff.x, diff.y, wrapper, true, diff.width, diff.height);
 
-          // also mark the difference on the other image next to it
+          // Also mark the difference on the other image
           var otherWrapper = imageId === 'left-image' ?
             document.getElementById('right-wrapper') :
             document.getElementById('left-wrapper');
           addMarker(diff.x, diff.y, otherWrapper, true, diff.width, diff.height);
 
-          // regardless of which diff was clicked, start filling in the found images container
+          // Reveal the next available slot in fixed order (regardless of which diff was clicked)
           var container = document.getElementById('found-images-container');
-          // put a checkmark for this difference into the next available slot (left to right)
+          // Insert the exact provided found image for this difference into the container
           if (trial.found_images && trial.found_images[diffIndex]) {
             var img = document.createElement('img');
+            // Reveal into the next available placeholder slot (left-to-right)
             var nextSlot = container.querySelector('.found-thumb:not(.revealed)');
             if (nextSlot) {
               if (nextSlot.dataset && nextSlot.dataset.slotSrc) {
@@ -339,7 +342,7 @@
           }
           //
 
-          // check if all differences found — only end if trial allows it
+          // Check if all differences found — only end if trial allows it
           if (found_differences.length === trial.differences.length) {
             if (trial.end_on_all_found !== false) {
               end_trial();
@@ -349,11 +352,11 @@
 
       }
 
-      // add click listeners
+      // Add click listeners
       document.getElementById('left-image').addEventListener('click', handleImageClick);
       document.getElementById('right-image').addEventListener('click', handleImageClick);
 
-      // end trial
+      // End trial
       function end_trial() {
         var end_time = performance.now();
         var trial_data = {
@@ -364,7 +367,7 @@
           success: found_differences.length === trial.differences.length
         };
 
-        // wait 2 seconds before advancing (for trial 1)
+        // Wait 2 seconds before advancing
         setTimeout(function () {
           if (stopBtn && stopBtn.parentNode) stopBtn.parentNode.removeChild(stopBtn);
           if (maxTimer) clearTimeout(maxTimer);
@@ -411,7 +414,7 @@
       },
       stop_action: {
         type: 'STRING',
-        default: 'next'
+        default: 'next' // 'next' | 'end_experiment'
       },
       max_duration: {
         type: 'INT',
@@ -428,7 +431,8 @@
     }
   };
 
-  // prompt & save function: asks for subject ID, builds CSV with ordered columns, triggers download and ends the experiment.
+  // Global prompt & save function: asks for subject ID, builds CSV with ordered columns,
+  // then triggers download and ends the experiment.
   function promptForSubjectAndSave(reason) {
     // create overlay
     var overlay = document.createElement('div');
@@ -477,7 +481,7 @@
         jsPsych.data.addProperties({ ID: id });
         var rows = jsPsych.data.get().values();
 
-        // build columns in the following order, excluding the default 'stimulus' and 'response' ones
+        // Build headers in the requested order, exclude 'stimulus' and 'response'
         var ordered = [
           'ID', 'trial_type', 'trial_index', 'time_elapsed', 'internal_node_id',
           'phase', 'duration_seconds', 'differences_found', 'total_differences',
@@ -496,7 +500,7 @@
         }
         var headers = ordered.concat(extraKeys);
 
-        // build CSV
+        // Build CSV
         var csvRows = [];
         csvRows.push(headers.join(','));
         for (var r = 0; r < rows.length; r++) {
@@ -554,7 +558,7 @@
     data: { task_part: 'id_question' }
   };
 
-  // Define differences
+  // Define your differences
   var differences_Trial1 = [
     { x: 132, y: 94, width: 81, height: 118 },    // seahorse
     { x: 305, y: 242, width: 74, height: 59 },    // starfish
@@ -616,6 +620,7 @@
   };
   timeline.push(intro);
 
+
   // Spot the difference trial 1
   var spot_trial1 = {
     type: SpotDifferencePlugin,
@@ -623,7 +628,7 @@
     image_right: 'images/training_3dif_right_image.png',
     differences: differences_Trial1,
 
-    // load images for tracking found differences
+    // One image per difference (order must match `differences`)
     found_images: [
       'images/found_1_differenceof3.png',
       'images/found_2_differenceof3.png',
@@ -669,10 +674,11 @@
     image_left: 'images/test_1dif_left_image.png',
     image_right: 'images/test_1dif_right_image.png',
     differences: differences_Trial2,
+    // Single example found image for this trial
     found_images: ['images/found_1_differenceof2.png'],
     image_width: 700,
     image_height: 500,
-    // render two placeholder boxes (even though there's only one real difference)
+    // render two placeholder boxes even though there's only one real difference
     num_found_slots: 2,
     stop_action: 'end_experiment',
     max_duration: 180000,
