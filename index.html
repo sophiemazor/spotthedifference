@@ -570,7 +570,12 @@
     { x: 150, y: 234, width: 93, height: 66 }   // yellow fish
   ];
 
-  // Preload assets in the background without blocking
+  // Preload first video 
+  var priorityVideo = document.createElement('video');
+  priorityVideo.preload = 'auto';
+  priorityVideo.src = 'videos/intro.mp4';
+
+  // Preload remaining images and videos in the background without blocking
   setTimeout(function() {
     var assetsToPreload = [
       'images/next_arrow.png',
@@ -583,7 +588,6 @@
       'images/test_1dif_left_image.png',
       'images/test_1dif_right_image.png',
       'images/found_1_differenceof2.png',
-      'videos/intro.mp4',
       'videos/intro_to_test.mp4'
     ];
 
@@ -597,7 +601,7 @@
         video.src = src;
       }
     });
-  }, 1000);
+  }, 500);
 
   // Create timeline
   var timeline = [];
