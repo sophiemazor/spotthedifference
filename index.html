@@ -622,14 +622,14 @@
     stimulus: ['videos/intro.mp4'],
     choices: "NO_KEYS",
     trial_ends_after_video: false,
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: 600,
+    height: 400,
     prompt: '<div id="arrow-container" style="display:none; position:fixed; right:16px; bottom:16px; z-index:10000;"><img id="intro-next-arrow" src="images/next_arrow.png" width="120" style="cursor:pointer; max-width:90%; height:auto;"></div>',
     on_load: function () {
       var videoContainer = document.querySelector('.jspsych-video-container');
       if (videoContainer) {
-        videoContainer.style.width = '60vw';
-        videoContainer.style.height = '60vh';
+        videoContainer.style.width = '100vw';
+        videoContainer.style.height = '100vh';
         videoContainer.style.position = 'fixed';
         videoContainer.style.top = '0';
         videoContainer.style.left = '0';
