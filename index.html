@@ -185,10 +185,10 @@
         stopBtn.src = 'images/stop.png';
         stopBtn.alt = 'stop';
         stopBtn.style.position = 'fixed';
-        stopBtn.style.right = '16px';
-        stopBtn.style.bottom = '30px';
-        stopBtn.style.width = '130px';
-        stopBtn.style.height = '130px';
+        stopBtn.style.right = '8px';
+        stopBtn.style.bottom = '8px';
+        stopBtn.style.width = '60px';
+        stopBtn.style.height = '60px';
         stopBtn.style.cursor = 'pointer';
         stopBtn.style.zIndex = 9999;
         document.body.appendChild(stopBtn);
@@ -643,16 +643,14 @@
     trial_ends_after_video: false,
     width: 600,
     height: 400,
-    prompt: '<div id="arrow-container" style="display:none; position:fixed; right:8px; bottom:8px; z-index:10000;"><img id="intro-next-arrow" src="images/next_arrow.png" width="60" style="cursor:pointer; max-width:90%; height:auto;"></div>',
+    prompt: '<div id="arrow-container" style="display:none; position:fixed; right:8px; bottom:8px; z-index:10000;"><img id="intro-next-arrow" src="images/next_arrow.png" width="120" style="cursor:pointer; max-width:90%; height:auto;"></div>',
     on_load: function () {
       var videoContainer = document.querySelector('.jspsych-video-container');
       if (videoContainer) {
-        videoContainer.style.width = '100vw';
-        videoContainer.style.height = '100vh';
         videoContainer.style.position = 'fixed';
-        videoContainer.style.top = '0';
-        videoContainer.style.left = '0';
-        videoContainer.style.marginTop = '0';
+        videoContainer.style.top = '50%';
+        videoContainer.style.left = '50%';
+        videoContainer.style.transform = 'translate(-50%, -50%)';
       }
       
       // Preload trial 1 images while video plays
@@ -722,16 +720,14 @@
     trial_ends_after_video: false,
     width: 600,
     height: 400,
-    prompt: '<div id="arrow-container" style="display:none; position:fixed; right:8px; bottom:8px; z-index:10000;"><img id="intro-next-arrow" src="images/next_arrow.png" width="60" style="cursor:pointer; max-width:90%; height:auto;"></div>',
+    prompt: '<div id="arrow-container" style="display:none; position:fixed; right:8px; bottom:8px; z-index:10000;"><img id="intro-next-arrow" src="images/next_arrow.png" width="120" style="cursor:pointer; max-width:90%; height:auto;"></div>',
     on_load: function () {
       var videoContainer = document.querySelector('.jspsych-video-container');
       if (videoContainer) {
-        videoContainer.style.width = '100vw';
-        videoContainer.style.height = '100vh';
         videoContainer.style.position = 'fixed';
-        videoContainer.style.top = '0';
-        videoContainer.style.left = '0';
-        videoContainer.style.marginTop = '0';
+        videoContainer.style.top = '50%';
+        videoContainer.style.left = '50%';
+        videoContainer.style.transform = 'translate(-50%, -50%)';
       }
       var video = document.querySelector('video');
       if (video) {
