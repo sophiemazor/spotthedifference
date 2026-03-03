@@ -622,20 +622,18 @@
     stimulus: ['videos/intro.mp4'],
     choices: "NO_KEYS",
     trial_ends_after_video: false,
-    width: 300,
-    height: 200,
-    prompt: '<div id="arrow-container" style="display:none; position:fixed; right:16px; bottom:16px; z-index:10000;'><img id="intro-next-arrow" src="images/next_arrow.png" width="120" style="cursor:pointer; max-width:90%; height:auto;"></div>',
+    width: window.innerWidth,
+    height: window.innerHeight,
+    prompt: '<div id="arrow-container" style="display:none; position:fixed; right:16px; bottom:16px; z-index:10000;"><img id="intro-next-arrow" src="images/next_arrow.png" width="120" style="cursor:pointer; max-width:90%; height:auto;"></div>',
     on_load: function () {
       var videoContainer = document.querySelector('.jspsych-video-container');
       if (videoContainer) {
-        videoContainer.style.width = '300px';
-        videoContainer.style.height = '200px';
-        videoContainer.style.maxWidth = '300px';
-        videoContainer.style.maxHeight = '200px';
+        videoContainer.style.width = '100vw';
+        videoContainer.style.height = '100vh';
         videoContainer.style.position = 'fixed';
-        videoContainer.style.top = '50%';
-        videoContainer.style.left = '50%';
-        videoContainer.style.transform = 'translate(-50%, -50%)';
+        videoContainer.style.top = '0';
+        videoContainer.style.left = '0';
+        videoContainer.style.marginTop = '-80px';
       }
       
       // Preload trial 1 images while video plays
@@ -681,8 +679,8 @@
       'images/found_2_differenceof3.png',
       'images/found_3_differenceof3.png'
     ],
-    image_width: 300,
-    image_height: 250,
+    image_width: 700,
+    image_height: 500,
     stop_action: 'next',
     phase: 'practice',
     on_load: function () {
@@ -744,8 +742,8 @@
     differences: differences_Trial2,
     // Single example found image for this trial
     found_images: ['images/found_1_differenceof2.png'],
-    image_width: 300,
-    image_height: 250,
+    image_width: 700,
+    image_height: 500,
     // render two placeholder boxes even though there's only one real difference
     num_found_slots: 2,
     stop_action: 'end_experiment',
