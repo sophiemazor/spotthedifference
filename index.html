@@ -8,20 +8,12 @@
   <script src="https://unpkg.com/@jspsych/plugin-video-keyboard-response@1.1.3"></script>
   <script src="https://unpkg.com/@jspsych/plugin-survey-text@2.1.0"></script>
   <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet" type="text/css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-    }
     .spot-ingifference-container {
       display: flex;
       justify-content: center;
-      gap: 15px;
-      margin: 10px;
+      gap: 40px;
+      margin: 20px;
     }
 
     .image-wrapper {
@@ -53,14 +45,14 @@
 
     .instructions {
       text-align: center;
-      margin-bottom: 8px;
-      font-size: 12px;
+      margin-bottom: 20px;
+      font-size: 18px;
     }
 
     .progress {
       text-align: center;
-      margin-top: 8px;
-      font-size: 12px;
+      margin-top: 20px;
+      font-size: 16px;
       font-weight: bold;
     }
 
@@ -82,9 +74,9 @@
     }
 
     #found-images-container .found-thumb {
-      width: 50px;
-      height: 50px;
-      border: 2px solid #a02c93;
+      width: 80px;
+      height: 80px;
+      border: 4px solid #a02c93;
       position: relative;
       background-size: cover;
       background-position: center;
@@ -185,10 +177,10 @@
         stopBtn.src = 'images/stop.png';
         stopBtn.alt = 'stop';
         stopBtn.style.position = 'fixed';
-        stopBtn.style.right = '8px';
-        stopBtn.style.bottom = '8px';
-        stopBtn.style.width = '60px';
-        stopBtn.style.height = '60px';
+        stopBtn.style.right = '16px';
+        stopBtn.style.bottom = '30px';
+        stopBtn.style.width = '130px';
+        stopBtn.style.height = '130px';
         stopBtn.style.cursor = 'pointer';
         stopBtn.style.zIndex = 9999;
         document.body.appendChild(stopBtn);
@@ -563,18 +555,7 @@
   var subjectNumber = {
     type: jsPsychSurveyText,
     questions: [{ prompt: 'Subject Number:', name: 'id' }],
-    data: { task_part: 'id_question' },
-    on_load: function () {
-      var container = document.querySelector('.jspsych-survey-text-wrapper');
-      if (container) {
-        container.style.fontSize = '12px';
-      }
-      var inputs = document.querySelectorAll('input[type="text"]');
-      inputs.forEach(function(input) {
-        input.style.fontSize = '12px';
-        input.style.padding = '5px';
-      });
-    }
+    data: { task_part: 'id_question' }
   };
 
   // Define your differences
@@ -619,8 +600,8 @@
   var instructions = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
-      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;">
-        <img id="start-arrow" src="images/next_arrow.png" alt="Start" style="width:150px;max-width:90%;cursor:pointer;">
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:70vh;">
+        <img id="start-arrow" src="images/next_arrow.png" alt="Start" style="width:360px;max-width:90%;cursor:pointer;">
       </div>
     `,
     choices: "NO_KEYS",
@@ -641,9 +622,9 @@
     stimulus: ['videos/intro.mp4'],
     choices: "NO_KEYS",
     trial_ends_after_video: false,
-    width: 600,
-    height: 400,
-    prompt: '<div id="arrow-container" style="display:none; position:fixed; right:8px; bottom:8px; z-index:10000;"><img id="intro-next-arrow" src="images/next_arrow.png" width="480" style="cursor:pointer; max-width:90%; height:auto;"></div>',
+    width: 400,
+    height: 300,
+    prompt: '<div id="arrow-container" style="display:none; position:fixed; right:16px; bottom:16px; z-index:10000;"><img id="intro-next-arrow" src="images/next_arrow.png" width="120" style="cursor:pointer; max-width:90%; height:auto;"></div>',
     on_load: function () {
       var videoContainer = document.querySelector('.jspsych-video-container');
       if (videoContainer) {
@@ -720,18 +701,18 @@
     stimulus: ['videos/intro_to_test.mp4'],
     choices: "NO_KEYS",
     trial_ends_after_video: false,
-    width: 600,
-    height: 400,
-    prompt: '<div id="arrow-container" style="display:none; position:fixed; right:8px; bottom:8px; z-index:10000;"><img id="intro-next-arrow" src="images/next_arrow.png" width="480" style="cursor:pointer; max-width:90%; height:auto;"></div>',
+    width: window.innerWidth,
+    height: window.innerHeight,
+    prompt: '<div id="arrow-container" style="display:none; position:fixed; right:16px; bottom:16px; z-index:10000;"><img id="intro-next-arrow" src="images/next_arrow.png" width="120" style="cursor:pointer; max-width:90%; height:auto;"></div>',
     on_load: function () {
       var videoContainer = document.querySelector('.jspsych-video-container');
       if (videoContainer) {
-        videoContainer.style.width = '400px';
-        videoContainer.style.height = '300px';
+        videoContainer.style.width = '100vw';
+        videoContainer.style.height = '100vh';
         videoContainer.style.position = 'fixed';
-        videoContainer.style.top = '50%';
-        videoContainer.style.left = '50%';
-        videoContainer.style.transform = 'translate(-50%, -50%)';
+        videoContainer.style.top = '0';
+        videoContainer.style.left = '0';
+        videoContainer.style.marginTop = '-80px';
       }
       var video = document.querySelector('video');
       if (video) {
