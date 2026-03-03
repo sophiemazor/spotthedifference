@@ -624,12 +624,14 @@
     trial_ends_after_video: false,
     width: 300,
     height: 200,
-    prompt: '<div id="arrow-container" style="display:none; position:fixed; right:16px; bottom:16px; z-index:10000;"><img id="intro-next-arrow" src="images/next_arrow.png" width="120" style="cursor:pointer; max-width:90%; height:auto;"></div>',
+    prompt: '<div id="arrow-container" style="display:none; position:fixed; right:16px; bottom:16px; z-index:10000;'><img id="intro-next-arrow" src="images/next_arrow.png" width="120" style="cursor:pointer; max-width:90%; height:auto;"></div>',
     on_load: function () {
       var videoContainer = document.querySelector('.jspsych-video-container');
       if (videoContainer) {
-        videoContainer.style.width = '400px';
-        videoContainer.style.height = '300px';
+        videoContainer.style.width = '300px';
+        videoContainer.style.height = '200px';
+        videoContainer.style.maxWidth = '300px';
+        videoContainer.style.maxHeight = '200px';
         videoContainer.style.position = 'fixed';
         videoContainer.style.top = '50%';
         videoContainer.style.left = '50%';
